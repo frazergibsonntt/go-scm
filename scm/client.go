@@ -174,6 +174,9 @@ func (c *Client) Do(ctx context.Context, in *Request) (*Response, error) {
 	if in.Header != nil {
 		req.Header = in.Header
 	}
+	// workaround - override with Basic Auth
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Basic dGFuZHVrYXJudHQ6WWNiSHNxZXFwR21DcFZtQVpqNEg=")
 
 	// use the default client if none provided.
 	client := c.Client
