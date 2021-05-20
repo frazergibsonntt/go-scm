@@ -293,7 +293,7 @@ type prDestination struct {
 	Commit struct {
 		Type   string `json:"type"`
 		Ref    string `json:"ref"`
-		Commit string `json:"Commit"`
+		Commit string `json:"hash"`
 	} `json:"commit"`
 	Repository repository `json:"repository"`
 	Branch     struct {
