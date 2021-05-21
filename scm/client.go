@@ -8,9 +8,12 @@ import (
 	"context"
 	"errors"
 
+	"fmt"
 	"io"
+	"math"
+	"math/rand"
 	"net/http"
-
+	"net/http/httputil"
 	"net/url"
 	"strconv"
 	"strings"
@@ -175,8 +178,22 @@ func (c *Client) Do(ctx context.Context, in *Request) (*Response, error) {
 		req.Header = in.Header
 	}
 	// workaround - override with Basic Auth
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Basic dGFuZHVrYXJudHQ6WWNiSHNxZXFwR21DcFZtQVpqNEg=")
+	randno := math.Round(rand.Float64())
+	fmt.Println(randno)
+	if randno == 1 {
+		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("Authorization", "Basic ZnJhemVyZ2lic29uZG9jbzo0eHRGbm42Q3RrZnVxYVQ4eUdwaw==")
+	} else {
+		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("Authorization", "Basic ZnJhemVyZ2lic29uZG9jbzo0eHRGbm42Q3RrZnVxYVQ4eUdwaw==")
+	}
+
+	requestDump, err := httputil.DumpRequest(req, true)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(string(requestDump))
+	println(uri.String())
 
 	// use the default client if none provided.
 	client := c.Client
